@@ -2,14 +2,57 @@
 
 Encrypt/decrypt your file with aes256
 
+
+## Installation
+
+### Cargo
+
+You can also install the latest version (or a specific commit) of mycrypt directly from GitHub.
+
+```shell
+cargo install --git https://github.com/sigoden/mycrypt.git
+```
+
+### Prebuilt binaries
+
+Archives of prebuilt binaries are available on [GitHub Release][gh-release] for Linux, maxOS and Windows. Download a compatible binary for your system. For convenience, make sure you place mycrypt under $PATH if you want access it from the command line.
+
+[gh-release]: https://github.com/sigoden/mycrypt/releases
+
+### Build from source
+
+sfz is written in Rust. You need to [install Rust][install-rust] in order to compile it.
+
+```shell
+$ git clone https://github.com/sigoden/mycrypt.git
+$ cd sfz
+$ cargo build --release
+$ ./target/release/mycrypt
+```
+
+[install-rust]: https://www.rust-lang.org/install.html
+
 ## Usage
 
 ```sh
 # encrypt 
-mycrpt encrypt -f sec.txt sec.bin
-mycrpt encrypt sec.bin
+mycrypt encrypt -f some-file.txt some-file.bin
+mycrypt encrypt some-file.bin
 
 # decrypt
-mycrypt decrypt -o sec.txt sec.bin
-mycrypt decrypt sec.bin > sec.txt
+mycrypt decrypt -o some-file.txt some-file.bin
+mycrypt decrypt some-file.bin > some-file.txt
 ```
+
+## Contributing
+
+Contributions are highly appreciated! Feel free to open issues or send pull requests directly.
+
+# License
+
+This project is licensed under either of
+
+- Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+- MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+
+at your option.
