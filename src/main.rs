@@ -67,6 +67,7 @@ fn run() -> Result<()> {
             };
             let pass = Password::with_theme(&ColorfulTheme::default())
                 .with_prompt("Password")
+                .with_confirmation("Repeat password", "The passwords don't match.")
                 .interact()?;
 
             let cipher_text = encrypt(&pass, &plain_text)?;
