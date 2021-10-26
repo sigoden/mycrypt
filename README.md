@@ -1,6 +1,6 @@
 # mycrypt
 
-Encrypt/decrypt your file
+Encrypt/decrypt your file with aes256
 
 ## Usage
 
