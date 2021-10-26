@@ -97,7 +97,7 @@ jobs:
 
     - name: Check Lockfile
       run: |
-        cargo update --locked --package just
+        cargo update --locked --package mycrypt
 
     - name: Build
       run: cargo build --all --target ${{ matrix.target }}
