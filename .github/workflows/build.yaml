@@ -115,7 +115,7 @@ jobs:
     - name: Package
       id: package
       if: ${{ startsWith(github.ref, 'refs/tags/') }}
-      run: ./bin/package ${{github.ref}} ${{matrix.os}} ${{ matrix.target }}
+      run: ./scripts/package ${{github.ref}} ${{matrix.os}} ${{ matrix.target }}
       shell: bash
 
     - name: Publish Archive
