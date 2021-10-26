@@ -7,7 +7,10 @@ use std::path::PathBuf;
 
 /// Encrypt/decrypt your file
 #[derive(Parser, Debug)]
-#[clap(about = "Encrypt/decrypt your file with ase256 - https://github.com/sigoden/mycrypt", version)]
+#[clap(
+    about = "Encrypt/decrypt your file with ase256 - https://github.com/sigoden/mycrypt",
+    version
+)]
 struct Cli {
     #[clap(subcommand)]
     cmd: SubCmd,
