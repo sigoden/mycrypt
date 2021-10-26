@@ -36,12 +36,12 @@ $ ./target/release/mycrypt
 
 ```sh
 # encrypt 
-mycrypt encrypt -f some-file.txt some-file.bin
-mycrypt encrypt some-file.bin
+mycrypt encrypt -f secret-file.txt secret-file.bin
+mycrypt encrypt secret-file.bin
 
 # decrypt
-mycrypt decrypt -o some-file.txt some-file.bin
-mycrypt decrypt some-file.bin > some-file.txt
+mycrypt decrypt -o secret-file.txt secret-file.bin
+mycrypt decrypt secret-file.bin > secret-file.txt
 ```
 
 ## Contributing
