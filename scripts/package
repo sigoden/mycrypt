@@ -26,11 +26,6 @@ echo "Copying release files..."
 mkdir dist
 cp \
   $executable \
-  Cargo.lock \
-  Cargo.toml \
-  LICENSE-MIT \
-  LICENSE-APACHE \
-  README.md \
   $dist
 
 cd $dist
