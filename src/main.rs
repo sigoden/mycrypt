@@ -7,7 +7,7 @@ use std::path::PathBuf;
 
 /// Encrypt/decrypt your file
 #[derive(Parser, Debug)]
-#[clap(author, about, version)]
+#[clap(about = "Encrypt/decrypt your file with ase256 - https://github.com/sigoden/mycrypt", version)]
 struct Cli {
     #[clap(subcommand)]
     cmd: SubCmd,
@@ -52,7 +52,6 @@ fn main() {
 
 fn run() -> Result<()> {
     let cli = Cli::parse();
-    println!("{:?}", cli);
 
     match cli.cmd {
         SubCmd::Encrypt(cmd) => {
