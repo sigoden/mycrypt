@@ -82,7 +82,7 @@ jobs:
       run: |
         rustup component add clippy rustfmt
         rustup target add ${{ matrix.target }}
-        rustup default "`cat rust-toolchain`-${{ matrix.target }}"
+        rustup default stable
 
     - name: Install AArch64 Toolchain
       if: ${{ matrix.target == 'aarch64-unknown-linux-gnu' }}
