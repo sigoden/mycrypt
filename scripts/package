@@ -28,7 +28,8 @@ cp \
   $executable \
   Cargo.lock \
   Cargo.toml \
-  LICENSE \
+  LICENSE-MIT \
+  LICENSE-APACHE \
   README.md \
   $dist
 
