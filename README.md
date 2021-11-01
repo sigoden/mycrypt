@@ -19,29 +19,26 @@ Archives of prebuilt binaries are available on [GitHub Release][gh-release] for 
 
 [gh-release]: https://github.com/sigoden/mycrypt/releases
 
-### Build from source
-
-sfz is written in Rust. You need to [install Rust][install-rust] in order to compile it.
-
-```shell
-$ git clone https://github.com/sigoden/mycrypt.git
-$ cd sfz
-$ cargo build --release
-$ ./target/release/mycrypt
-```
-
-[install-rust]: https://www.rust-lang.org/install.html
-
 ## Usage
 
 ```sh
 # encrypt 
 mycrypt encrypt -f secret-file.txt secret-file.bin
+# encrypt with interactive editor
 mycrypt encrypt secret-file.bin
+# encrypt alias
+mycrypt e secret-file.bin
+# encrypt with pass from enviroment variable
+MYCRYPT_PASS=123456 mycrypt encrypt secret-file.bin
 
 # decrypt
 mycrypt decrypt -o secret-file.txt secret-file.bin
+# decrypt to stdout
 mycrypt decrypt secret-file.bin > secret-file.txt
+# decrypt alias
+mycrypt d secret-file.bin
+# decrypt with pass from enviroment variable
+MYCRYPT_PASS=123456 decrypt secret-file.bin
 ```
 
 ## Contributing

@@ -2,8 +2,11 @@ use anyhow::Result;
 use clap::{Parser, ValueHint};
 use dialoguer::{theme::ColorfulTheme, Editor, Password};
 use mycrypt::{decrypt, encrypt, read_file, write_file};
+use std::env;
 use std::io::{self, Write};
 use std::path::PathBuf;
+
+const PASS_ENV_KEY: &str = "MYCRYPT_PASS";
 
 /// Encrypt/decrypt your file
 #[derive(Parser, Debug)]
@@ -65,19 +68,24 @@ fn run() -> Result<()> {
                     None => return Ok(()),
                 },
             };
-            let pass = Password::with_theme(&ColorfulTheme::default())
-                .with_prompt("Password")
-                .with_confirmation("Repeat password", "The passwords don't match.")
-                .interact()?;
+            let pass = env::var(PASS_ENV_KEY).or_else(|_| {
+                Password::with_theme(&ColorfulTheme::default())
+                    .with_prompt("Password")
+                    .with_confirmation("Repeat password", "The passwords don't match.")
+                    .interact()
+            })?;
 
             let cipher_text = encrypt(&pass, &plain_text)?;
             write_file(&cmd.output, &cipher_text)?;
         }
         SubCmd::Decrypt(cmd) => {
             let cipher_text = read_file(&cmd.target)?;
-            let pass = Password::with_theme(&ColorfulTheme::default())
-                .with_prompt("Password")
-                .interact()?;
+
+            let pass = env::var(PASS_ENV_KEY).or_else(|_| {
+                Password::with_theme(&ColorfulTheme::default())
+                    .with_prompt("Password")
+                    .interact()
+            })?;
 
             let plain_text = decrypt(&pass, &cipher_text)?;
             match cmd.output {
