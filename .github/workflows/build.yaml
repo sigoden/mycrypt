@@ -82,22 +82,12 @@ jobs:
         cargo --version
         # cargo clippy --version
 
-    - name: Check Lockfile
-      run: |
-        cargo update --locked --package mycrypt
-
-    - name: Build
-      run: cargo build --all --target ${{ matrix.target }}
+    - name: Format
+      run: cargo fmt --all -- --check
 
     - name: Test
       if: ${{ matrix.native }}
       run: cargo test --all --target ${{ matrix.target }}
-
-    # - name: Clippy
-    #   run: cargo clippy --all --all-targets --all-features
-
-    - name: Format
-      run: cargo fmt --all -- --check
 
     - name: Check Release
       id: check_tag
