@@ -5,19 +5,15 @@ on:
     branches:
     - master
     tags:
-    - '*'
+    - '[0-9]+.[0-9]+.[0-9]+*'
   pull_request:
-    branches:
-    - master
 
 defaults:
   run:
     shell: bash
 
 jobs:
-  all:
-    name: All
-
+  main:
     strategy:
       matrix:
         target:
@@ -112,15 +108,54 @@ jobs:
     - name: Format
       run: cargo fmt --all -- --check
 
+    - name: Check Release
+      id: check_tag
+      shell: bash
+      run: |
+        tag=${${GITHUB_REF##*/}}
+        if [[ "$tag" =~ [0-9]+.[0-9]+.[0-9]+$ ]]; then
+          echo "::set-output name=tag::$tag"
+        else
+          echo "::set-output name=tag::null"
+        fi
+
     - name: Package
       id: package
-      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      if: ${{ steps.check_tag.outputs.tag != 'null' }}
       run: ./scripts/package ${{github.ref}} ${{matrix.os}} ${{ matrix.target }}
       shell: bash
+      run: |
+        set -euxo pipefail
+
+        src=`pwd`
+        dist=$src/dist
+        bin=mycrypt
+        name=$bin-$version-$target
+        executable=target/$target/release/$bin
+
+        cargo build --target $target --release 
+
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          executable=$executable.exe
+        fi
+
+        mkdir $dist
+        cp $executable $dist
+        cd $dist
+
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+            archive=$dist/$name.zip
+            7z a $archive *
+            echo "::set-output name=archive::`pwd -W`/$name.zip"
+        else
+            archive=$dist/$name.tar.gz
+            tar czf $archive *
+            echo "::set-output name=archive::$archive"
+        fi
 
     - name: Publish Archive
       uses: softprops/action-gh-release@v0.1.5
-      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      if: ${{ steps.check_tag.outputs.tag != 'null' }}
       with:
         files: ${{ steps.package.outputs.archive }}
       env:
