@@ -103,13 +103,15 @@ jobs:
     - name: Package
       id: package
       if: ${{ steps.check_tag.outputs.tag != 'null' }}
-      shell: bash
+      env:
+        target: ${{ matrix.target }}
+        version: ${{ steps.check_tag.outputs.tag }}
       run: |
         set -euxo pipefail
 
+        bin=mycrypt
         src=`pwd`
         dist=$src/dist
-        bin=mycrypt
         name=$bin-$version-$target
         executable=target/$target/release/$bin
 
